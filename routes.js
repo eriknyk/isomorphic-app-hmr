@@ -10,6 +10,7 @@ import NotFound from './components/NotFound.jsx';
 var routes = {
   path: '/',
   component: Application,
+  indexRoute: {component: Home},
   childRoutes: [
     { path: 'about', component: About },
     { path: 'home', component: Home, default: true },
