@@ -1,7 +1,7 @@
 var webpack = require('webpack');
 var path = require('path');
 
-module.exports = {
+var config = {
   devtool: 'eval',
   entry: [
     'webpack-hot-middleware/client',
@@ -13,10 +13,24 @@ module.exports = {
     publicPath: '/js/'
   },
   module: {
-    loaders: [
-      { test: /\.css$/, loader: 'style!css' },
-      { test: /\.(js|jsx)$/, exclude: /node_modules/, loader: require.resolve('babel-loader') }
-    ]
+    loaders: [{
+      test: /\.(js|jsx)$/,
+      exclude: /node_modules/,
+      loader: 'babel',
+      query: {
+        stage: 0,
+        plugins: [
+          'react-transform'
+        ],
+        extra: {
+          'react-transform': [{
+            target: 'react-transform-hmr',
+            imports: ['react'],
+            locals: ['module']
+          }]
+        }
+      }
+    }]
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
@@ -26,4 +40,19 @@ module.exports = {
   resolve: {
     extensions: ['', '.js', '.jsx']
   }
-}
+};
+
+// enable React Hot loader
+// console.log('-------------->', process.env.HOT);
+// if (process.env.HOT) {
+//   config.module.loaders[0].query.plugins.push('react-transform');
+//   config.module.loaders[0].query.extra = {
+//     'react-transform': [{
+//       target: 'react-transform-hmr',
+//       imports: ['react'],
+//       locals: ['module']
+//     }]
+//   };
+// }
+
+module.exports = config;
