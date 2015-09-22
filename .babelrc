@@ -1,0 +1,24 @@
+{
+  "stage": 0,
+  "loose": [
+    "es6.modules",
+    "es6.classes",
+    "es7.classProperties"
+  ],
+  "optional": [ "es7.classProperties", "es7.exportExtensions" ],
+  "env": {
+    "development": {
+      "plugins": ["react-transform"],
+      "extra": {
+        "react-transform": [{
+          "target": "react-transform-hmr",
+          "imports": ["react"],
+          "locals": ["module"]
+        }, {
+          "target": "react-transform-catch-errors",
+          "imports": ["react", "redbox-react"]
+        }]
+      }
+    }
+  }
+}

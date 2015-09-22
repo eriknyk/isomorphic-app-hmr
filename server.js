@@ -14,6 +14,15 @@ import render from './render.js';
 const server = express();
 require('events').EventEmitter.defaultMaxListeners = Infinity;
 
+let webpack = require('webpack');
+let wpConfig = require('./webpack.config.js');
+let compiler = webpack(wpConfig);
+server.use(require('webpack-dev-middleware')(compiler, {
+  noInfo: true, 
+  publicPath: wpConfig.output.publicPath
+}));
+server.use(require('webpack-hot-middleware')(compiler));
+
 server.use(favicon(__dirname + '/favicon.ico'));
 server.use('/public', express.static(__dirname + '/build'));
 server.use('/', express.static(__dirname + '/public'));
